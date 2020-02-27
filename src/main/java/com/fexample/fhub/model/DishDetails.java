@@ -18,8 +18,4 @@ public class DishDetails extends BaseEntity{
     @JoinTable(name = "details_image", joinColumns = {@JoinColumn(name = "details_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "image_id", referencedColumnName = "id")})
     List<Image> images;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @Table(name = "item_details")
-    Dish dish;
 }

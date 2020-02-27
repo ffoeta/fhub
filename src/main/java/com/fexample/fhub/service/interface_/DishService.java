@@ -19,7 +19,7 @@ public interface DishService {
 
     void deleteById(UUID id);
 
-    Dish getItem(DishExtended extended);
+    Dish getDish(DishExtended extended);
 
-    Dish setItem(Dish dish, DishExtended extended);
+    Dish setDish(Dish dish, DishExtended extended);
 }

@@ -1,7 +1,7 @@
 package com.fexample.fhub.service.implementation;
 
 import com.fexample.fhub.dto.User.UserExtended;
-import com.fexample.fhub.model.Role;
+import com.fexample.fhub.exception.UserServiceException;
 import com.fexample.fhub.model.Status;
 import com.fexample.fhub.model.User;
 import com.fexample.fhub.repository.RoleRepository;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -22,83 +21,108 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    UserServiceImpl(final UserRepository userRepository, final RoleRepository roleRepository, final BCryptPasswordEncoder passwordEncoder) {
-        this.roleRepository = roleRepository;
+    UserServiceImpl(final UserRepository userRepository, 
+    final RoleRepository roleRepository, final BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public User register(final User user, final String ROLE) {
-        final Role role = roleRepository.findByName(ROLE);
-        final List<Role> userRoles = new ArrayList<>();
-        userRoles.add(role);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(userRoles);
-        user.setStatus(Status.ACTIVE);
-        user.setId(UUID.randomUUID());
-        final Date date = new Date();
-        user.setCreated(date);
-        user.setUpdated(date);
-        userRepository.save(user);
-        return user;
-    }
-
-    @Override
-    public User update(final User user) {
-        user.setUpdated(new Date());
-        return userRepository.save(user);
-    }
-
-    @Override
-    public List<User> getAll() {
-        final List<User> users = userRepository.findAll();
-        return users;
-    }
-
-    @Override
-    public User findByUsername(final String username) {
-        final User user = userRepository.findByUsername(username);
-        return user;
-    }
-
-    @Override
-    public User findById(final UUID id) {
-        final User user = userRepository.findById(id).orElse(null);
-        return user;
-    }
-
-    @Override
-    public void deleteById(final UUID id) {
-        userRepository.deleteById(id);
-    }
-
-    public User getUser(final UserExtended extended) {
-        User user = null;
-        if (extended.getId() != null) {
-            user = findById(extended.getId());
-        } else if (extended.getUsername() != null) {
-            user = findByUsername(extended.getUsername());
+    public User save(UserExtended extended) throws UserServiceException {
+        
+        if  ( (extended == null) || ( (extended.getUsername() == null) 
+                                        && (extended.getId() == null) 
+                                        && (extended.getEmail() == null) ) ) {
+            throw new UserServiceException("User provided is null or bad credentials");
         }
-        return user;
-    }
 
-    public User setIUser(final User user, final UserExtended extended) {
+        User user = this.find(extended);
+
         if (user == null) {
-            return null;
+            user = extended.toUser();
+            user.setId(UUID.randomUUID());
+            user.setCreated(new Date());
+        } else {
+            if (extended.getId() != null ) {
+                user.setId(extended.getId());
+            };
+            if (extended.getUsername() != null) {
+                user.setUsername(extended.getUsername());
+            };
+            if (extended.getPassword() != null) {
+                user.setPassword(passwordEncoder.encode(extended.getPassword()));             
+            };
+            if (extended.getEmail() != null) {
+                user.setEmail(extended.getEmail());
+            };
+            if (extended.getFirstname() != null) {
+                user.setFirstname(extended.getFirstname());
+            };
+            if (extended.getLastname() != null) {
+                user.setLastname(extended.getLastname());
+            };
+            if (extended.getStatus() != null) {
+                user.setStatus(extended.getStatus());
+            }
+            if (extended.getRoles() != null) {
+                user.setRoles(extended.getRoles());
+            }
         }
-        final String username = extended.getUsername();
-        final String password = extended.getPassword();
-        if (username != null) {
-            user.setUsername(username);
+
+        user.setUpdated(new Date());
+        return this.userRepository.save(user);
+    }
+
+    @Override
+    public User delete(UserExtended extended) throws UserServiceException {
+        if ( extended == null ) {
+            throw new UserServiceException("User provided is null");
         }
-        if (password != null) {
-            user.setPassword(password);
+
+        UserExtended extended2 = extended;
+        extended2.setStatus(Status.DELETED);
+        this.save(extended2);
+        return this.find(extended2);
+    }
+
+    @Override
+    public User findById(UUID id) {
+
+        return this.userRepository.findByid(id);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+
+        return this.userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+
+        return this.userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User find(UserExtended extended) {
+
+        User user = this.findByUsername(extended.getUsername());
+
+        if (user == null) {
+            user = this.findById(extended.getId());
         }
-        return user;
+        if (user == null) {
+            user = this.findByEmail(extended.getEmail());
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> findAll() {
+
+        return this.userRepository.findAll();
     }
 }

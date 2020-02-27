@@ -1,5 +1,8 @@
 package com.fexample.fhub.config;
 
+import com.fexample.fhub.security.JwtConfigurer;
+import com.fexample.fhub.security.JwtTokenProvider;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("api/").hasRole("USER")
-                .antMatchers("admin/").hasRole("USER")
+                .antMatchers("open/").hasRole("USER")
+                .antMatchers("admin/").hasRole("ADMIN")
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()

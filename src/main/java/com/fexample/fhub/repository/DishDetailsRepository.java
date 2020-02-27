@@ -8,5 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface DishDetailsRepository extends JpaRepository<DishDetails, UUID> {
-    DishDetails findByName(String name);
+    DishDetails findByid(UUID id);
 }

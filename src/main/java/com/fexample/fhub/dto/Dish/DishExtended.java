@@ -1,6 +1,7 @@
 package com.fexample.fhub.dto.Dish;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fexample.fhub.model.Category;
@@ -14,6 +15,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DishExtended {
 
+    private UUID id;
     private String name;
     private int kkal;
     private int price;
@@ -24,6 +26,8 @@ public class DishExtended {
     public Dish toDish(){
 
         Dish dish = new Dish();
+
+        dish.setId(id);
         dish.setName(name);
         dish.setKkal(kkal);
         dish.setPrice(price);
@@ -37,6 +41,7 @@ public class DishExtended {
     public static DishExtended fromDish(Dish dish){
         DishExtended extended = new DishExtended();
 
+        extended.setId(dish.getId());
         extended.setName(dish.getName());
         extended.setKkal(dish.getKkal());
         extended.setPrice(dish.getPrice());

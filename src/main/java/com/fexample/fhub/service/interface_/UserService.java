@@ -1,25 +1,33 @@
 package com.fexample.fhub.service.interface_;
 
 import com.fexample.fhub.dto.User.UserExtended;
+import com.fexample.fhub.exception.UserServiceException;
 import com.fexample.fhub.model.User;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-    User register(User user, String ROLE);
 
-    User update(User user);
+    //saves user to db
+    User save(UserExtended extended) throws UserServiceException;
 
-    User findByUsername(String username);
+    //delete user
+    User delete(UserExtended extended) throws UserServiceException;
 
+    //finds by id
     User findById(UUID id);
 
-    List<User> getAll();
+    //finds by username
+    User findByUsername(String name);
 
-    void deleteById(UUID id);
+    //finds by email
+    User findByEmail(String email);
 
-    User getUser(UserExtended extended);
+    //selects user
+    User find(UserExtended extended);
 
-    User setIUser(User user, UserExtended extended);
+    //selects all users
+    List<User> findAll();
+
 }
