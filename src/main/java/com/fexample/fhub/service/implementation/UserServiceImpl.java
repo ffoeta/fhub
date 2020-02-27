@@ -4,10 +4,8 @@ import com.fexample.fhub.dto.User.UserExtended;
 import com.fexample.fhub.exception.UserServiceException;
 import com.fexample.fhub.model.Status;
 import com.fexample.fhub.model.User;
-import com.fexample.fhub.repository.RoleRepository;
 import com.fexample.fhub.repository.UserRepository;
 import com.fexample.fhub.service.interface_.UserService;
-// import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,22 +18,19 @@ import java.util.UUID;
 // @Slf4j
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
-    UserServiceImpl(final UserRepository userRepository, 
-    final RoleRepository roleRepository, final BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private BCryptPasswordEncoder passwordEncoder;
+
 
     @Override
     public User save(UserExtended extended) throws UserServiceException {
-        
-        if  ( (extended == null) || ( (extended.getUsername() == null) 
-                                        && (extended.getId() == null) 
-                                        && (extended.getEmail() == null) ) ) {
+
+        if ((extended == null) || ((extended.getUsername() == null)
+                && (extended.getId() == null)
+                && (extended.getEmail() == null))) {
             throw new UserServiceException("User provided is null or bad credentials");
         }
 
@@ -46,24 +41,30 @@ public class UserServiceImpl implements UserService {
             user.setId(UUID.randomUUID());
             user.setCreated(new Date());
         } else {
-            if (extended.getId() != null ) {
+            if (extended.getId() != null) {
                 user.setId(extended.getId());
-            };
+            }
+            ;
             if (extended.getUsername() != null) {
                 user.setUsername(extended.getUsername());
-            };
+            }
+            ;
             if (extended.getPassword() != null) {
-                user.setPassword(passwordEncoder.encode(extended.getPassword()));             
-            };
+                user.setPassword(passwordEncoder.encode(extended.getPassword()));
+            }
+            ;
             if (extended.getEmail() != null) {
                 user.setEmail(extended.getEmail());
-            };
+            }
+            ;
             if (extended.getFirstname() != null) {
                 user.setFirstname(extended.getFirstname());
-            };
+            }
+            ;
             if (extended.getLastname() != null) {
                 user.setLastname(extended.getLastname());
-            };
+            }
+            ;
             if (extended.getStatus() != null) {
                 user.setStatus(extended.getStatus());
             }
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User delete(UserExtended extended) throws UserServiceException {
-        if ( extended == null ) {
+        if (extended == null) {
             throw new UserServiceException("User provided is null");
         }
 

@@ -4,15 +4,13 @@ import com.fexample.fhub.model.Role;
 import com.fexample.fhub.model.User;
 import com.fexample.fhub.service.interface_.UserService;
 import io.jsonwebtoken.*;
-// import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -29,17 +27,12 @@ public class JwtTokenProvider {
     private long validityInMilliseconds;
 
 
+    @Qualifier("JwtUserDetailsService")
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
     private UserService userService;
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
 
     @PostConstruct
     protected void init() {
