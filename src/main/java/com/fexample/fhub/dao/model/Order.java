@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "order")
+@Table(name = "c_order_table")
 @Data
 public class Order extends BaseEntity {
     @Column(name = "user_id")
@@ -24,7 +24,7 @@ public class Order extends BaseEntity {
     private Delivery delivery;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "order_dish", joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
+    @JoinTable(name = "r_order_dish_table", joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "dish_id", referencedColumnName = "id")})
     private List<Dish> dishes;
 }

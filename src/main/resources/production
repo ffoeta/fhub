@@ -9,3 +9,5 @@ spring.datasource.continue-on-error=true
 
 jwt.token.secret="1488"
 jwt.token.expired=3600000
+
+spring.jpa.hibernate.ddl-auto=none

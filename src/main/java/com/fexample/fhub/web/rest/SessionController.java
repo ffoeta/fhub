@@ -3,7 +3,6 @@ package com.fexample.fhub.web.rest;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fexample.fhub.dao.dto.Session.SessionUp;
 import com.fexample.fhub.dao.dto.User.UserExtended;
 import com.fexample.fhub.dao.model.User;
 import com.fexample.fhub.facades.exception.UserServiceException;
@@ -12,7 +11,6 @@ import com.fexample.fhub.facades.security.JwtTokenProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/api/session/")
 public class SessionController {

@@ -7,7 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "dishdetails")
+@Table(name = "c_dish_details_table")
 @Data
 public class DishDetails extends BaseEntity{
 
@@ -15,7 +15,7 @@ public class DishDetails extends BaseEntity{
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "details_image", joinColumns = {@JoinColumn(name = "details_id", referencedColumnName = "id")},
+    @JoinTable(name = "r_details_image_table", joinColumns = {@JoinColumn(name = "details_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "image_id", referencedColumnName = "id")})
     List<Image> images;
 }

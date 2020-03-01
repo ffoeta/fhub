@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "storedetails")
+@Table(name = "c_store_details_table")
 @Data
 public class StoreDetails extends BaseEntity{
 
