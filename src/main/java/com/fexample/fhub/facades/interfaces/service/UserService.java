@@ -11,10 +11,10 @@ import com.fexample.fhub.facades.exception.UserServiceException;
 public interface UserService {
 
     //saves user to db
-    User save(User user) throws UserServiceException;
+    User save(User user);
 
     //delete user
-    User delete(User user) throws UserServiceException;
+    User delete(User user);
 
     //finds by id
     User findById(UUID id);

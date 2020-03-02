@@ -5,11 +5,11 @@ import java.util.Map;
 
 import com.fexample.fhub.dao.dto.User.UserExtended;
 import com.fexample.fhub.dao.model.User;
-import com.fexample.fhub.facades.exception.UserServiceException;
 import com.fexample.fhub.facades.interfaces.service.UserService;
 import com.fexample.fhub.facades.security.JwtTokenProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(value = "/api/session/")
@@ -59,19 +57,20 @@ public class SessionController {
     }
 
     @PostMapping("signup")
-    public ResponseEntity<Map<Object, Object>> sign(@RequestBody UserExtended extended) {
+    public ResponseEntity sign(@RequestBody UserExtended extended) {
 
         Map<Object, Object> response = new HashMap<>();
 
         User user = extended.toUser();
 
-        try {
-            userService.save(user);
-        }catch(UserServiceException e){
-            return ResponseEntity.badRequest().build();
-        }
+        userService.save(user);
+
+        user = userService.find(user);
+
+        response.put("username", user.getUsername());
+        response.put("password", user.getPassword());
         
-        return login(extended);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("gen")
@@ -85,6 +84,5 @@ public class SessionController {
         response.put("password", pass);
         
         return ResponseEntity.ok(response);
-        // return ResponseEntity.badRequest().build();
     }
 }

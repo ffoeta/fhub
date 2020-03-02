@@ -26,12 +26,16 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User save(User user) throws UserServiceException {
+    public User save(User user){
 
-        if ((user == null) || ((user.getUsername() == null)
+        try{
+            if ((user == null) || ((user.getUsername() == null)
                 && (user.getId() == null)
                 && (user.getEmail() == null))) {
-            throw new UserServiceException("User provided is null or bad credentials");
+                throw new UserServiceException("User provided is null or bad credentials");
+            }
+        }catch(Exception e){
+            System.out.println(e);
         }
 
         User user2 = this.find(user);
@@ -71,15 +75,21 @@ public class UserServiceImpl implements UserService {
                 user2.setRoles(user.getRoles());
             }
         }
-
+app
         user2.setUpdated(new Date());
+
+        System.out.println(user2.getId());
         return this.userRepository.save(user2);
     }
 
     @Override
-    public User delete(User user) throws UserServiceException {
-        if (user == null) {
-            throw new UserServiceException("User provided is null");
+    public User delete(User user){
+        try {
+            if (user == null) {
+                throw new UserServiceException("User provided is null");
+            }
+        }catch(Exception e){
+            System.out.println(e);
         }
 
         User user2 = this.find(user);
