@@ -1,4 +1,4 @@
-package com.fexample.fhub.dao.model;
+package com.fexample.fhub.dao.model.classes;
 
 import lombok.Data;
 
@@ -17,7 +17,7 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "frirstname")
+    @Column(name = "firstname")
     private String firstname;
 
     @Column(name = "lastname")

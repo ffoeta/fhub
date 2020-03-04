@@ -1,4 +1,4 @@
-package com.fexample.fhub.dao.model;
+package com.fexample.fhub.dao.model.classes;
 
 import lombok.Data;
 
@@ -7,9 +7,12 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "c_dish_details_table")
+@Table(name = "c_store_details_table")
 @Data
-public class DishDetails extends BaseEntity{
+public class StoreDetails extends BaseEntity{
+
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "description")
     private String description;

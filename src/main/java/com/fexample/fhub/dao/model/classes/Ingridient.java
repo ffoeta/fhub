@@ -1,4 +1,4 @@
-package com.fexample.fhub.dao.model;
+package com.fexample.fhub.dao.model.classes;
 
 import lombok.Data;
 

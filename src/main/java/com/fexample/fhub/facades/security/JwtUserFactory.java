@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.fexample.fhub.dao.model.Role;
-import com.fexample.fhub.dao.model.Status;
-import com.fexample.fhub.dao.model.User;
+import com.fexample.fhub.dao.model.classes.Role;
+import com.fexample.fhub.dao.model.enums.Status;
+import com.fexample.fhub.dao.model.classes.User;
 
 public final class JwtUserFactory {
 

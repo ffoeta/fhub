@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-import com.fexample.fhub.dao.model.DishDetails;
+import com.fexample.fhub.dao.model.classes.DishDetails;
 
 @Repository
 public interface DishDetailsRepository extends JpaRepository<DishDetails, UUID> {

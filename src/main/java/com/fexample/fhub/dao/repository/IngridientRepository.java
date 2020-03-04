@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-import com.fexample.fhub.dao.model.Ingridient;
+import com.fexample.fhub.dao.model.classes.Ingridient;
 
 @Repository
 public interface IngridientRepository extends JpaRepository<Ingridient, UUID> {

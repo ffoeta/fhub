@@ -1,14 +1,13 @@
-package com.fexample.fhub.dao.model;
+package com.fexample.fhub.dao.model.classes;
 
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "c_role_table")
+@Table(name = "c_food_table")
 @Data
-public class Role extends BaseEntity{
-
+public class Food extends BaseEntity {
     @Column(name = "name")
     private String name;
 }

@@ -1,10 +1,10 @@
-package com.fexample.fhub.web.rest;
+package com.fexample.fhub.web;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.fexample.fhub.dao.dto.User.UserExtended;
-import com.fexample.fhub.dao.model.User;
+import com.fexample.fhub.dao.model.classes.User;
 import com.fexample.fhub.facades.interfaces.service.UserService;
 import com.fexample.fhub.facades.security.JwtTokenProvider;
 
@@ -40,7 +40,7 @@ public class SessionController {
     public ResponseEntity<Map<Object, Object>> login(@RequestBody UserExtended extended) {
         String username = extended.getUsername();
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, extended.getPassword()));
-        User user = userService.findByUsername(username);
+        User user = userService.findByName(username);
 
         Map<Object, Object> response = new HashMap<>();
 
@@ -57,20 +57,9 @@ public class SessionController {
     }
 
     @PostMapping("signup")
-    public ResponseEntity sign(@RequestBody UserExtended extended) {
-
-        Map<Object, Object> response = new HashMap<>();
-
-        User user = extended.toUser();
-
-        userService.save(user);
-
-        user = userService.find(user);
-
-        response.put("username", user.getUsername());
-        response.put("password", user.getPassword());
-        
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<Object> sign(@RequestBody UserExtended extended) {
+    
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("gen")

@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import com.fexample.fhub.dao.model.Status;
-import com.fexample.fhub.dao.model.User;
+import com.fexample.fhub.dao.model.enums.Status;
+import com.fexample.fhub.dao.model.classes.User;
 import com.fexample.fhub.dao.repository.UserRepository;
 import com.fexample.fhub.facades.exception.UserServiceException;
 import com.fexample.fhub.facades.interfaces.service.UserService;
@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
         if (user2 == null) {
             user.setId(UUID.randomUUID());
             user.setCreated(new Date());
+            user2 = user;
         } else {
             if (user.getId() != null) {
                 user2.setId(user.getId());
@@ -75,10 +76,8 @@ public class UserServiceImpl implements UserService {
                 user2.setRoles(user.getRoles());
             }
         }
-app
-        user2.setUpdated(new Date());
 
-        System.out.println(user2.getId());
+        user2.setUpdated(new Date());
         return this.userRepository.save(user2);
     }
 
@@ -104,7 +103,7 @@ app
     }
 
     @Override
-    public User findByUsername(String username) {
+    public User findByName(String username) {
         return this.userRepository.findByUsername(username);
     }
 
@@ -115,7 +114,7 @@ app
 
     @Override
     public User find(User user) {
-        User user2 = this.findByUsername(user.getUsername());
+        User user2 = this.findByName(user.getUsername());
 
         if (user2 == null) {
             user2 = this.findById(user.getId());
@@ -129,5 +128,15 @@ app
     @Override
     public List<User> findAll() {
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public User findByFirstname(String firstname) {
+        return this.userRepository.findByFirstname(firstname);
+    }
+
+    @Override
+    public User findByLastname(String lastname) {
+        return this.findByLastname(lastname);
     }
 }

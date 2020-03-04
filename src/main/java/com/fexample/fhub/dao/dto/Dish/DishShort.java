@@ -3,15 +3,16 @@ package com.fexample.fhub.dao.dto.Dish;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fexample.fhub.dao.model.Category;
-import com.fexample.fhub.dao.model.Dish;
-import com.fexample.fhub.dao.model.Image;
+import com.fexample.fhub.dao.model.classes.Category;
+import com.fexample.fhub.dao.model.classes.Dish;
+import com.fexample.fhub.dao.model.classes.Image;
+import com.fexample.fhub.facades.interfaces.dto.DtoEntity;
 
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DishShort {
+public class DishShort implements DtoEntity<Dish>{
 
     private String name;
     private int kkal;
@@ -19,7 +20,7 @@ public class DishShort {
     List<Category> categories;
     Image image;
 
-    public Dish toDish(){
+    public Dish toModel(){
 
         Dish dish = new Dish();
         dish.setName(name);
@@ -30,7 +31,7 @@ public class DishShort {
         return dish;
     }
 
-    public static DishShort fromDish(Dish dish){
+    public static DishShort fromModel(Dish dish){
         DishShort short_ = new DishShort();
 
         short_.setName(dish.getName());

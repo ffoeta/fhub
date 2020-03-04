@@ -1,10 +1,12 @@
 package com.fexample.fhub.dao.dto.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fexample.fhub.dao.model.Role;
-import com.fexample.fhub.dao.model.User;
+import com.fexample.fhub.dao.model.classes.Role;
+import com.fexample.fhub.dao.model.classes.User;
 
-import com.fexample.fhub.dao.model.Status;
+import com.fexample.fhub.dao.model.enums.Status;
+import com.fexample.fhub.facades.interfaces.dto.DtoEntity;
+
 import lombok.Data;
 
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.UUID;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserExtended {
+public class UserExtended implements DtoEntity<User>{
     private UUID id;
     private String username;
     private String password;
@@ -22,7 +24,7 @@ public class UserExtended {
     private String lastname;
     private List<Role> roles;
 
-    public User toUser() {
+    public User toModel() {
         User user = new User();
 
         user.setId(id);
@@ -37,7 +39,7 @@ public class UserExtended {
         return user;
     }
 
-    public static UserExtended fromUser(User user) {
+    public static UserExtended fromModel(User user) {
         UserExtended extended = new UserExtended();
 
         extended.setId(user.getId());
