@@ -1,4 +1,4 @@
-package com.fexample.fhub.facades.security;
+package com.fexample.fhub.facade.security;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.fexample.fhub.dao.model.classes.Role;
 import com.fexample.fhub.dao.model.classes.User;
-import com.fexample.fhub.facades.interfaces.service.UserService;
+import com.fexample.fhub.facade.interfaces.service.UserService;
 
 import java.util.*;
 
@@ -67,11 +67,11 @@ public class JwtTokenProvider {
     }
 
     public UUID getId(String token) {
-        return userService.findByName(getUsername(token)).getId();
+        return userService.findByUsername(getUsername(token)).getId();
     }
 
     public User getUser(String token) {
-        return userService.findByName(getUsername(token));
+        return userService.findByUsername(getUsername(token));
     }
 
     public String resolveToken(HttpServletRequest req) {

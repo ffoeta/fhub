@@ -5,17 +5,16 @@ import com.fexample.fhub.dao.model.classes.Role;
 import com.fexample.fhub.dao.model.classes.User;
 
 import com.fexample.fhub.dao.model.enums.Status;
-import com.fexample.fhub.facades.interfaces.dto.DtoEntity;
+import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
 
 import lombok.Data;
 
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserExtended implements DtoEntity<User>{
-    private UUID id;
+public class UserDto implements DtoEntity<User>{
+
     private String username;
     private String password;
     private String email;
@@ -23,11 +22,10 @@ public class UserExtended implements DtoEntity<User>{
     private String firstname;
     private String lastname;
     private List<Role> roles;
-
+    
     public User toModel() {
         User user = new User();
 
-        user.setId(id);
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
@@ -39,18 +37,17 @@ public class UserExtended implements DtoEntity<User>{
         return user;
     }
 
-    public static UserExtended fromModel(User user) {
-        UserExtended extended = new UserExtended();
+    public static UserDto fromModel(User user) {
+        UserDto userDto = new UserDto();
 
-        extended.setId(user.getId());
-        extended.setUsername(user.getUsername());
-        extended.setPassword(user.getPassword());
-        extended.setEmail(user.getEmail());
-        extended.setStatus(user.getStatus());
-        extended.setFirstname(user.getFirstname());
-        extended.setLastname(user.getLastname());
-        extended.setRoles(user.getRoles());
+        userDto.setUsername(user.getUsername());
+        userDto.setPassword(user.getPassword());
+        userDto.setEmail(user.getEmail());
+        userDto.setStatus(user.getStatus());
+        userDto.setFirstname(user.getFirstname());
+        userDto.setLastname(user.getLastname());
+        userDto.setRoles(user.getRoles());
 
-        return extended;
+        return userDto;
     }
 }

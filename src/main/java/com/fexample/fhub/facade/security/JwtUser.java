@@ -1,4 +1,4 @@
-package com.fexample.fhub.facades.security;
+package com.fexample.fhub.facade.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fexample.fhub.dao.model.classes.Category;
 import com.fexample.fhub.dao.model.classes.Dish;
 import com.fexample.fhub.dao.model.classes.Image;
-import com.fexample.fhub.facades.interfaces.dto.DtoEntity;
+import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
 
 import lombok.Data;
 

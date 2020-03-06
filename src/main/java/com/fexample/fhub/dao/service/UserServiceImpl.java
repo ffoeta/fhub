@@ -1,9 +1,11 @@
 package com.fexample.fhub.dao.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -11,8 +13,7 @@ import java.util.UUID;
 import com.fexample.fhub.dao.model.enums.Status;
 import com.fexample.fhub.dao.model.classes.User;
 import com.fexample.fhub.dao.repository.UserRepository;
-import com.fexample.fhub.facades.exception.UserServiceException;
-import com.fexample.fhub.facades.interfaces.service.UserService;
+import com.fexample.fhub.facade.interfaces.service.UserService;
 
 @Service
 // @Slf4j
@@ -24,86 +25,66 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-
     @Override
-    public User save(User user){
-
-        try{
-            if ((user == null) || ((user.getUsername() == null)
-                && (user.getId() == null)
-                && (user.getEmail() == null))) {
-                throw new UserServiceException("User provided is null or bad credentials");
-            }
-        }catch(Exception e){
-            System.out.println(e);
+    public User saveUser(User user) {
+        
+        if (this.userRepository.findByUsername(user.getUsername()) != null) {
+            return null;
         }
 
-        User user2 = this.find(user);
-
-        if (user2 == null) {
-            user.setId(UUID.randomUUID());
-            user.setCreated(new Date());
-            user2 = user;
-        } else {
-            if (user.getId() != null) {
-                user2.setId(user.getId());
-            }
-            ;
-            if (user.getUsername() != null) {
-                user2.setUsername(user.getUsername());
-            }
-            ;
-            if (user.getPassword() != null) {
-                user2.setPassword(passwordEncoder.encode(user.getPassword()));
-            }
-            ;
-            if (user.getEmail() != null) {
-                user2.setEmail(user.getEmail());
-            }
-            ;
-            if (user.getFirstname() != null) {
-                user2.setFirstname(user.getFirstname());
-            }
-            ;
-            if (user.getLastname() != null) {
-                user2.setLastname(user.getLastname());
-            }
-            ;
-            if (user.getStatus() != null) {
-                user2.setStatus(user.getStatus());
-            }
-            if (user.getRoles() != null) {
-                user2.setRoles(user.getRoles());
-            }
-        }
-
-        user2.setUpdated(new Date());
-        return this.userRepository.save(user2);
+        user.setId(UUID.randomUUID());
+        
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        
+        user.setCreated(new Date());
+        
+        user.setUpdated(new Date());
+        
+        return this.userRepository.save(user);
     }
 
     @Override
-    public User delete(User user){
-        try {
-            if (user == null) {
-                throw new UserServiceException("User provided is null");
-            }
-        }catch(Exception e){
-            System.out.println(e);
+    public User updateUser(User user) {
+        
+        if (this.userRepository.findByUsername(user.getUsername()) == null) {
+            return null;
         }
-
-        User user2 = this.find(user);
-        user2.setStatus(Status.DELETED);
-        this.save(user2);
-        return this.find(user2);
+        
+        user.setUpdated(new Date());
+        
+        return this.userRepository.save(user);
     }
 
     @Override
-    public User findById(UUID id) {
-        return this.userRepository.findByid(id);
+    public User fakeDeleteUserByUsername(String username) {
+        
+        User user = this.userRepository.findByUsername(username);
+        
+        if (user == null) {
+            return null;
+        }
+        
+        user.setStatus(Status.DELETED);
+        
+        return this.userRepository.save(user);
     }
 
     @Override
-    public User findByName(String username) {
+    public void deleteUserByUsername(String username) {
+        User user = this.userRepository.findByUsername(username);
+        if (user == null) {
+            return;
+        }
+        this.userRepository.delete(user);
+    }
+
+    @Override
+    public List<User> findAllUsers(Pageable pageable) {
+        return this.userRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public User findByUsername(String username) {
         return this.userRepository.findByUsername(username);
     }
 
@@ -113,30 +94,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User find(User user) {
-        User user2 = this.findByName(user.getUsername());
-
-        if (user2 == null) {
-            user2 = this.findById(user.getId());
-        }
-        if (user2 == null) {
-            user2 = this.findByEmail(user.getEmail());
-        }
-        return user2;
+    public List<User> findAllByFirstname(String firstname, Pageable pageable) {
+        return this.userRepository.findAllByFirstname(firstname, pageable).getContent();
     }
 
     @Override
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public List<User> findAllByLastname(String lastname, Pageable pageable) {
+        return this.userRepository.findAllByLastname(lastname, pageable).getContent();
     }
+ 
 
-    @Override
-    public User findByFirstname(String firstname) {
-        return this.userRepository.findByFirstname(firstname);
-    }
 
-    @Override
-    public User findByLastname(String lastname) {
-        return this.findByLastname(lastname);
-    }
+
 }

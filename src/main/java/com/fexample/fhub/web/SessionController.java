@@ -3,46 +3,40 @@ package com.fexample.fhub.web;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fexample.fhub.dao.dto.User.UserExtended;
+import com.fexample.fhub.dao.dto.User.UserDto;
 import com.fexample.fhub.dao.model.classes.User;
-import com.fexample.fhub.facades.interfaces.service.UserService;
-import com.fexample.fhub.facades.security.JwtTokenProvider;
+import com.fexample.fhub.facade.interfaces.service.UserService;
+import com.fexample.fhub.facade.security.JwtTokenProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/session/")
+@RequestMapping(value = "/api/session")
 public class SessionController {
+    
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("login")
-    public ResponseEntity<Map<Object, Object>> login(@RequestBody UserExtended extended) {
-        String username = extended.getUsername();
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, extended.getPassword()));
-        User user = userService.findByName(username);
+    public ResponseEntity<Map<Object, Object>> LogInUser(@RequestBody UserDto userDto){
 
-        Map<Object, Object> response = new HashMap<>();
+        String username = userDto.getUsername();
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, userDto.getPassword()));
+        User user = userService.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User with username: " + username + " not found");
@@ -50,28 +44,26 @@ public class SessionController {
 
         String token = jwtTokenProvider.createToken(username, user.getRoles());
 
+        Map<Object, Object> response = new HashMap<>();
+
         response.put("username", username);
         response.put("token", token);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok()
+                    .body(response);
     }
 
     @PostMapping("signup")
-    public ResponseEntity<Object> sign(@RequestBody UserExtended extended) {
-    
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    public ResponseEntity<Map<Object, Object>> SignUpUser(@RequestBody UserDto userDto){
 
-    @PostMapping("gen")
-    public ResponseEntity<Map<Object, Object>> gen(@RequestBody UserExtended extended) {
+        User user = userService.saveUser(userDto.toModel());
 
         Map<Object, Object> response = new HashMap<>();
 
-        String pass = passwordEncoder.encode(extended.getPassword());
+        response.put("count", 1);
+        response.put("items", user);
 
-        response.put("username", extended.getUsername());
-        response.put("password", pass);
-        
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok()
+                    .body(response);
     }
 }

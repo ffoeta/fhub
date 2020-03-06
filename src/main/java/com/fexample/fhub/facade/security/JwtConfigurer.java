@@ -1,4 +1,4 @@
-package com.fexample.fhub.facades.security;
+package com.fexample.fhub.facade.security;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

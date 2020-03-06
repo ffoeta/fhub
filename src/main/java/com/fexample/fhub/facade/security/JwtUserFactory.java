@@ -1,4 +1,4 @@
-package com.fexample.fhub.facades.security;
+package com.fexample.fhub.facade.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,7 +1,7 @@
-package com.fexample.fhub.facades.security;
+package com.fexample.fhub.facade.security;
 
 import com.fexample.fhub.dao.model.classes.User;
-import com.fexample.fhub.facades.interfaces.service.UserService;
+import com.fexample.fhub.facade.interfaces.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userService.findByName(username);
+        User user = userService.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException(username + " not found.");

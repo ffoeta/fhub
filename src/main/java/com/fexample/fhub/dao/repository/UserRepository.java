@@ -1,5 +1,7 @@
 package com.fexample.fhub.dao.repository;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,9 +11,13 @@ import com.fexample.fhub.dao.model.classes.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
+
+    Page<User> findAllByFirstname(String firstname, Pageable pageable);
+
+    Page<User> findAllByLastname(String lastname, Pageable pageable);
+
     User findByUsername(String username);
-    User findByFirstname(String firstname);
-    User findByLastname(String lastname);
+
     User findByEmail(String email);
-    User findByid(UUID id);
+
 }

@@ -1,7 +1,7 @@
-package com.fexample.fhub.facades.config;
+package com.fexample.fhub.facade.config;
 
-import com.fexample.fhub.facades.security.JwtConfigurer;
-import com.fexample.fhub.facades.security.JwtTokenProvider;
+import com.fexample.fhub.facade.security.JwtConfigurer;
+import com.fexample.fhub.facade.security.JwtTokenProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
