@@ -1,1 +1,0 @@
-java -jar target/fhub-0.0.1-SNAPSHOT.jar

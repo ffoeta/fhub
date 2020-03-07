@@ -7,11 +7,8 @@ import com.fexample.fhub.dao.model.classes.User;
 import com.fexample.fhub.dao.model.enums.Status;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
 
-import lombok.Data;
-
 import java.util.List;
 
-@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto implements DtoEntity<User>{
 
@@ -49,5 +46,61 @@ public class UserDto implements DtoEntity<User>{
         userDto.setRoles(user.getRoles());
 
         return userDto;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

@@ -1,13 +1,10 @@
 package com.fexample.fhub.dao.model.classes;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "c_store_table")
-@Data
 public class Store extends BaseEntity {
 
     @Column(name = "name")

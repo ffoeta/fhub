@@ -42,7 +42,7 @@
 										<delete file="target/classes/application.properties"/>
 										<copy file="src/main/resources/development"
 											tofile="target/classes/application.properties"/>
-									<echo>=== ----- ===</echo>						
+									<echo>=== ----- ===</echo>
 								</target>
 							</configuration>
 							<goals>
@@ -78,7 +78,7 @@
 										<delete file="target/classes/application.properties"/>
 										<copy file="src/main/resources/production"
 											tofile="target/classes/application.properties"/>
-									<echo>=== ----- ===</echo>						
+									<echo>=== ----- ===</echo>
 								</target>
 							</configuration>
 							<goals>
@@ -143,11 +143,11 @@
 		</dependency>
 
 		<!-- lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.projectlombok</groupId>-->
+<!--			<artifactId>lombok</artifactId>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
 
 		<!-- tests -->
 		<dependency>

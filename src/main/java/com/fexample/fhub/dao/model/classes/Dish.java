@@ -1,13 +1,10 @@
 package com.fexample.fhub.dao.model.classes;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "с_dish_table")
-@Data
 public class Dish extends BaseEntity {
 
     @Column(name = "name")
@@ -35,4 +32,51 @@ public class Dish extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "details_id", referencedColumnName = "id")})
     DishDetails dishDetails;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getKkal() {
+        return kkal;
+    }
+
+    public void setKkal(int kkal) {
+        this.kkal = kkal;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public DishDetails getDishDetails() {
+        return dishDetails;
+    }
+
+    public void setDishDetails(DishDetails dishDetails) {
+        this.dishDetails = dishDetails;
+    }
 }

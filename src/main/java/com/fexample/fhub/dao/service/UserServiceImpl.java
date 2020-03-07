@@ -1,5 +1,6 @@
 package com.fexample.fhub.dao.service;
 
+import com.fexample.fhub.dao.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,11 +17,13 @@ import com.fexample.fhub.dao.repository.UserRepository;
 import com.fexample.fhub.facade.interfaces.service.UserService;
 
 @Service
-// @Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -39,6 +42,12 @@ public class UserServiceImpl implements UserService {
         user.setCreated(new Date());
         
         user.setUpdated(new Date());
+
+        user.setStatus(Status.ACTIVE);
+
+//        if (user.getRoles().isEmpty()) {
+            user.setRoles(this.roleRepository.findAll());
+//        }
         
         return this.userRepository.save(user);
     }

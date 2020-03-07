@@ -1,5 +1,4 @@
 package com.fexample.fhub.dao.model.classes;
-import lombok.Data;
 
 import java.util.List;
 
@@ -7,7 +6,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "c_dish_details_table")
-@Data
 public class DishDetails extends BaseEntity{
 
     @Column(name = "name")
@@ -20,4 +18,28 @@ public class DishDetails extends BaseEntity{
     @JoinTable(name = "r_details_image_table", joinColumns = {@JoinColumn(name = "details_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "image_id", referencedColumnName = "id")})
     List<Image> images;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 }
