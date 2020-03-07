@@ -2,6 +2,7 @@ package com.fexample.fhub.dao.model.classes;
 
 import com.fexample.fhub.dao.model.enums.Status;
 
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -14,11 +15,12 @@ public class BaseEntity {
 
     @PrePersist
     public void prePersist() {
-        if(this.getStatus() == null) 
+        if(this.getStatus() == null)
             this.setStatus(Status.NOT_ACTIVE);
     }
 
     @Id
+    @Type(type="uuid-char")
     private UUID id;
 
     @CreatedDate

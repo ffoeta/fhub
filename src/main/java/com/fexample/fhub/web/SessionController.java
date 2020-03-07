@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/api/session")
 public class SessionController {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     @Autowired
     private UserService userService;
@@ -66,4 +70,15 @@ public class SessionController {
         return ResponseEntity.ok()
                     .body(response);
     }
+
+//    @PostMapping("gen")
+//    public ResponseEntity<Map<Object, Object>> gen(@RequestBody UserDto userDto){
+//
+//        Map<Object, Object> response = new HashMap<>();
+//
+//        response.put(userDto.getUsername(), passwordEncoder.encode(userDto.getPassword()));
+//
+//        return ResponseEntity.ok()
+//                .body(response);
+//    }
 }

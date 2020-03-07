@@ -1,5 +1,6 @@
 package com.fexample.fhub.dao.service;
 
+import com.fexample.fhub.dao.model.classes.Role;
 import com.fexample.fhub.dao.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -31,9 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         
-        if (this.userRepository.findByUsername(user.getUsername()) != null) {
-            return null;
-        }
+        if (this.userRepository.findByUsername(user.getUsername()) != null) return null;
 
         user.setId(UUID.randomUUID());
         
@@ -45,19 +44,19 @@ public class UserServiceImpl implements UserService {
 
         user.setStatus(Status.ACTIVE);
 
-//        if (user.getRoles().isEmpty()) {
-            user.setRoles(this.roleRepository.findAll());
-//        }
-        
+        if (user.getRoles() == null) {
+            List<Role> roles = new ArrayList<>();
+            roles.add(this.roleRepository.findByName("ROLE_USER"));
+            user.setRoles(roles);
+        }
+
         return this.userRepository.save(user);
     }
 
     @Override
     public User updateUser(User user) {
         
-        if (this.userRepository.findByUsername(user.getUsername()) == null) {
-            return null;
-        }
+        if (this.userRepository.findByUsername(user.getUsername()) == null) return null;
         
         user.setUpdated(new Date());
         
@@ -69,9 +68,7 @@ public class UserServiceImpl implements UserService {
         
         User user = this.userRepository.findByUsername(username);
         
-        if (user == null) {
-            return null;
-        }
+        if (user == null) return null;
         
         user.setStatus(Status.DELETED);
         
@@ -81,9 +78,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserByUsername(String username) {
         User user = this.userRepository.findByUsername(username);
-        if (user == null) {
-            return;
-        }
+
+        if (user == null) return;
+
         this.userRepository.delete(user);
     }
 
