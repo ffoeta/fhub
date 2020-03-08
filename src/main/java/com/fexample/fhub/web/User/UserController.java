@@ -1,4 +1,4 @@
-package com.fexample.fhub.web;
+package com.fexample.fhub.web.User;
 
 import java.util.HashMap;
 import java.util.List;
