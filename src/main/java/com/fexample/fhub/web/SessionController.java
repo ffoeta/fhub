@@ -3,8 +3,11 @@ package com.fexample.fhub.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fexample.fhub.dao.dto.Session.LogInDto;
+import com.fexample.fhub.dao.dto.Session.SignUpDto;
 import com.fexample.fhub.dao.dto.User.UserDto;
 import com.fexample.fhub.dao.model.classes.User;
+import com.fexample.fhub.facade.exception.EntityNotFoundException;
 import com.fexample.fhub.facade.interfaces.service.UserService;
 import com.fexample.fhub.facade.security.JwtTokenProvider;
 
@@ -12,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,15 +38,17 @@ public class SessionController {
     JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("login")
-    public ResponseEntity<Map<Object, Object>> LogInUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Map<Object, Object>> LogInUser(@RequestBody LogInDto logInDto){
 
-        String username = userDto.getUsername();
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, userDto.getPassword()));
+        String username = logInDto.getUsername();
         User user = userService.findByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User with username: " + username + " not found");
+
+            throw new EntityNotFoundException("User " + username);
         }
+
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, logInDto.getPassword()));
 
         String token = jwtTokenProvider.createToken(username, user.getRoles());
 
@@ -58,9 +62,14 @@ public class SessionController {
     }
 
     @PostMapping("signup")
-    public ResponseEntity<Map<Object, Object>> SignUpUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Map<Object, Object>> SignUpUser(@RequestBody SignUpDto signUpDto){
 
-        User user = userService.saveUser(userDto.toModel());
+        User user = userService.saveUser(signUpDto.toModel());
+
+        if (user == null) {
+
+            throw new EntityNotFoundException("User " + signUpDto.getUsername());
+        }
 
         Map<Object, Object> response = new HashMap<>();
 

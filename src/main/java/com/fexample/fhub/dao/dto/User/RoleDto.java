@@ -1,11 +1,13 @@
 package com.fexample.fhub.dao.dto.User;
 
 import com.fexample.fhub.dao.model.classes.Role;
-import com.fexample.fhub.dao.model.classes.User;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
+
+import java.util.UUID;
 
 public class RoleDto implements DtoEntity<Role> {
 
+    private UUID id;
     private String name;
 
     @Override
@@ -17,19 +19,32 @@ public class RoleDto implements DtoEntity<Role> {
         return role;
     }
 
-    public static RoleDto fromModel(Role role) {
-        RoleDto roleDto = new RoleDto();
+    @Override
+    public RoleDto fromModel(Role role) {
 
-        roleDto.setName(role.getName());
+        this.setId(role.getId());
+        this.setName(role.getName());
 
-        return roleDto;
+        return this;
+    }
+
+    public UUID getId() {
+
+        return id;
+    }
+
+    public void setId(UUID id) {
+
+        this.id = id;
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 }
