@@ -2,6 +2,8 @@ package com.fexample.fhub.dao.service;
 
 import com.fexample.fhub.dao.model.classes.User.Role;
 import com.fexample.fhub.dao.repository.RoleRepository;
+import com.fexample.fhub.facade.exception.Controller.ControllerServiceCallException;
+import com.fexample.fhub.facade.exception.Service.EntityAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,16 +34,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         
-        if (this.userRepository.findByUsername(user.getUsername()) != null) return null;
+        if (this.userRepository.findByUsername(user.getUsername()) != null)
+            throw new ControllerServiceCallException(
+                    new EntityAlreadyExistsException("User " + user.getUsername() + " already exists."));
+
 
         user.setId(UUID.randomUUID());
-        
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        
         user.setCreated(new Date());
-        
         user.setUpdated(new Date());
-
         user.setStatus(Status.ACTIVE);
 
         if (user.getRoles() == null) {
@@ -55,20 +56,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(User user) {
-        
-        if (this.userRepository.findByUsername(user.getUsername()) == null) return null;
-        
+
+        User user2 = this.userRepository.findByUsername(user.getUsername());
+
+        if (user2 == null)
+            throw new ControllerServiceCallException(
+                    new EntityAlreadyExistsException("User " + user.getUsername() + " does not exist."));
+
+        user.setId(user2.getId());
+        user.setStatus(user2.getStatus());
         user.setUpdated(new Date());
+        user.setCreated(user2.getCreated());
         
         return this.userRepository.save(user);
     }
 
     @Override
     public User fakeDeleteUserByUsername(String username) {
-        
+
         User user = this.userRepository.findByUsername(username);
-        
-        if (user == null) return null;
+
+        if (user == null)
+            throw new ControllerServiceCallException(
+                    new EntityAlreadyExistsException("User " + username + " does not exist."));
         
         user.setStatus(Status.DELETED);
         
@@ -77,26 +87,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserByUsername(String username) {
+
         User user = this.userRepository.findByUsername(username);
 
-        if (user == null) return;
+        if (user == null)
+            throw new ControllerServiceCallException(
+                    new EntityAlreadyExistsException("User " + username + " does not exist."));
 
         this.userRepository.delete(user);
     }
 
     @Override
     public List<User> findAllUsers(Pageable pageable) {
+
         return this.userRepository.findAll(pageable).getContent();
     }
 
     @Override
     public User findByUsername(String username) {
-        return this.userRepository.findByUsername(username);
+
+        User user = this.userRepository.findByUsername(username);
+
+        if (user == null)
+            throw new ControllerServiceCallException(
+                    new EntityAlreadyExistsException("User " + username + " does not exist."));
+
+        return user;
     }
 
     @Override
     public User findByEmail(String email) {
-        return this.userRepository.findByEmail(email);
+
+        User user = this.userRepository.findByEmail(email);
+
+        if (user == null)
+            throw new ControllerServiceCallException(
+                    new EntityAlreadyExistsException("User with " + email + " does not exist."));
+
+        return user;
     }
 
     @Override
@@ -108,8 +136,4 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllByLastname(String lastname, Pageable pageable) {
         return this.userRepository.findAllByLastname(lastname, pageable).getContent();
     }
- 
-
-
-
 }

@@ -20,7 +20,7 @@ public class ImageServiceImpl implements ImageService {
     ImageRepository imageRepository;
 
     @Override
-    public Image saveImage(Image image) {
+    public Image saveImage(Image image) throws EntityAlreadyExistsException{
 
         if ( this.imageRepository.findById(image.getId()).orElse(null) != null)
                 new ControllerServiceCallException(
@@ -53,7 +53,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image findById(UUID id) throws ControllerServiceCallException, EntityNotExistsException {
+    public Image findById(UUID id) throws EntityNotExistsException {
         
         Image image = this.imageRepository.findById(id).orElseThrow(() ->
                 new ControllerServiceCallException(
@@ -61,5 +61,4 @@ public class ImageServiceImpl implements ImageService {
 
         return image;
     }
-
 }
