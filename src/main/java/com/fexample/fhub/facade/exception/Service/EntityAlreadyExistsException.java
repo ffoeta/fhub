@@ -1,4 +1,4 @@
-package com.fexample.fhub.facade.exception;
+package com.fexample.fhub.facade.exception.Service;
 
 public class EntityAlreadyExistsException extends RuntimeException {
 

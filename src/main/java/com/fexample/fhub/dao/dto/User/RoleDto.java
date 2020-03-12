@@ -1,6 +1,6 @@
 package com.fexample.fhub.dao.dto.User;
 
-import com.fexample.fhub.dao.model.classes.Role;
+import com.fexample.fhub.dao.model.classes.User.Role;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
 
 import java.util.UUID;

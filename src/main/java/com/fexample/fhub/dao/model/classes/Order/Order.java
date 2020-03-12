@@ -1,5 +1,7 @@
-package com.fexample.fhub.dao.model.classes;
+package com.fexample.fhub.dao.model.classes.Order;
 
+import com.fexample.fhub.dao.model.classes.BaseEntity;
+import com.fexample.fhub.dao.model.classes.Store.Dish;
 import com.fexample.fhub.dao.model.enums.Delivery;
 
 import javax.persistence.*;

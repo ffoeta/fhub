@@ -1,6 +1,6 @@
 package com.fexample.fhub.dao.dto.Store;
 
-import com.fexample.fhub.dao.model.classes.Category;
+import com.fexample.fhub.dao.model.classes.Store.Category;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
 
 import java.util.UUID;

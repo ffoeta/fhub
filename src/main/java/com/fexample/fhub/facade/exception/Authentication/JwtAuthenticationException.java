@@ -1,4 +1,4 @@
-package com.fexample.fhub.facade.exception;
+package com.fexample.fhub.facade.exception.Authentication;
 
 import org.springframework.security.core.AuthenticationException;
 

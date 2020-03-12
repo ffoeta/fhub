@@ -5,9 +5,8 @@ import java.util.Map;
 
 import com.fexample.fhub.dao.dto.Session.LogInDto;
 import com.fexample.fhub.dao.dto.Session.SignUpDto;
-import com.fexample.fhub.dao.dto.User.UserDto;
-import com.fexample.fhub.dao.model.classes.User;
-import com.fexample.fhub.facade.exception.EntityNotFoundException;
+import com.fexample.fhub.dao.model.classes.User.User;
+import com.fexample.fhub.facade.exception.Controller.ControllerServiceCallException;
 import com.fexample.fhub.facade.interfaces.service.UserService;
 import com.fexample.fhub.facade.security.JwtTokenProvider;
 
@@ -45,7 +44,7 @@ public class SessionController {
 
         if (user == null) {
 
-            throw new EntityNotFoundException("User " + username);
+            throw new ControllerServiceCallException("User " + username);
         }
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, logInDto.getPassword()));
@@ -68,7 +67,7 @@ public class SessionController {
 
         if (user == null) {
 
-            throw new EntityNotFoundException("User " + signUpDto.getUsername());
+            throw new ControllerServiceCallException("User " + signUpDto.getUsername());
         }
 
         Map<Object, Object> response = new HashMap<>();

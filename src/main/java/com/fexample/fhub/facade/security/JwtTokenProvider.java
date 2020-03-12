@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
-import com.fexample.fhub.dao.model.classes.Role;
-import com.fexample.fhub.dao.model.classes.User;
+import com.fexample.fhub.dao.model.classes.User.Role;
+import com.fexample.fhub.dao.model.classes.User.User;
 import com.fexample.fhub.facade.interfaces.service.UserService;
 
 import java.util.*;

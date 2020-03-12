@@ -1,4 +1,7 @@
-package com.fexample.fhub.dao.model.classes;
+package com.fexample.fhub.dao.model.classes.Store;
+
+import com.fexample.fhub.dao.model.classes.BaseEntity;
+import com.fexample.fhub.dao.model.classes.Static.Image;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,10 +25,10 @@ public class Dish extends BaseEntity {
     List<Category> categories;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "r_dish_image_table", joinColumns = {@JoinColumn(name = "dish_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "image_id", referencedColumnName = "id")})
-    Image image;
+    List<Image> images;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "r_dish_details_table", joinColumns = {@JoinColumn(name = "dish_id", referencedColumnName = "id")},
@@ -49,7 +52,7 @@ public class Dish extends BaseEntity {
     }
 
     public int getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(int price) {
@@ -64,12 +67,12 @@ public class Dish extends BaseEntity {
         this.categories = categories;
     }
 
-    public Image getImage() {
-        return image;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public DishDetails getDishDetails() {

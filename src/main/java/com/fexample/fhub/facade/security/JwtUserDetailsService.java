@@ -1,6 +1,6 @@
 package com.fexample.fhub.facade.security;
 
-import com.fexample.fhub.dao.model.classes.User;
+import com.fexample.fhub.dao.model.classes.User.User;
 import com.fexample.fhub.facade.interfaces.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;

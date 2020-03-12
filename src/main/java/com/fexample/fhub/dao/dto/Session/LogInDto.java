@@ -1,6 +1,6 @@
 package com.fexample.fhub.dao.dto.Session;
 
-import com.fexample.fhub.dao.model.classes.User;
+import com.fexample.fhub.dao.model.classes.User.User;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
 
 public class LogInDto implements DtoEntity<User> {

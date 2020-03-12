@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fexample.fhub.dao.model.classes.User;
-import com.fexample.fhub.facade.exception.EntityNotFoundException;
+import com.fexample.fhub.dao.model.classes.User.User;
+import com.fexample.fhub.facade.exception.Controller.ControllerServiceCallException;
 import com.fexample.fhub.facade.interfaces.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class UserController {
 
         if (user == null) {
 
-            throw new EntityNotFoundException("User " + username);
+            throw new ControllerServiceCallException("User " + username);
         }
 
         Map<Object, Object> response = new HashMap<>();
@@ -67,7 +67,7 @@ public class UserController {
 
         if (user == null) {
 
-            throw new EntityNotFoundException("Email " + email);
+            throw new ControllerServiceCallException("Email " + email);
         }
 
         Map<Object, Object> response = new HashMap<>();

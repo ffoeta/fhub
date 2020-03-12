@@ -2,7 +2,7 @@ package com.fexample.fhub.facade.interfaces.service;
 
 import java.util.List;
 
-import com.fexample.fhub.dao.model.classes.User;
+import com.fexample.fhub.dao.model.classes.User.User;
 
 import org.springframework.data.domain.Pageable;
 

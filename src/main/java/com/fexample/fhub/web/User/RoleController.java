@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fexample.fhub.dao.dto.User.RoleDto;
-import com.fexample.fhub.dao.model.classes.Role;
-import com.fexample.fhub.facade.exception.EntityAlreadyExistsException;
+import com.fexample.fhub.dao.model.classes.User.Role;
 import com.fexample.fhub.facade.interfaces.service.RoleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +42,6 @@ public class RoleController {
         Map<Object, Object> response = new HashMap<>();
 
         Role role = this.roleService.saveRole(roleDto.toModel());
-
-        if (role == null) {
-
-            throw new EntityAlreadyExistsException("Role " + role.getName());
-        }
 
         response.put("count", 1);
         response.put("items", role);

@@ -1,6 +1,6 @@
 package com.fexample.fhub.dao.dto.Order;
 
-import com.fexample.fhub.dao.model.classes.Order;
+import com.fexample.fhub.dao.model.classes.Order.Order;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
 
 public class OrderDto implements DtoEntity<Order> {

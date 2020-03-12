@@ -1,7 +1,6 @@
 package com.fexample.fhub.facade.interfaces.service;
 
-import com.fexample.fhub.dao.model.classes.Role;
-import org.springframework.data.domain.Page;
+import com.fexample.fhub.dao.model.classes.User.Role;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

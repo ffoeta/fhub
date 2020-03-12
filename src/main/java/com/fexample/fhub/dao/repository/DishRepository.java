@@ -1,5 +1,6 @@
 package com.fexample.fhub.dao.repository;
 
+import com.fexample.fhub.dao.model.classes.Store.Dish;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,12 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-import com.fexample.fhub.dao.model.classes.Store.Ingridient;
-
 @Repository
-public interface IngridientRepository extends JpaRepository<Ingridient, UUID> {
-    
-    Ingridient findByName(String name);
+public interface DishRepository extends JpaRepository<Dish, UUID> {
 
-    Page<Ingridient> findAll(Pageable pageable);    
+    Dish findByName(String name);
+
+    Page<Dish> findAll(Pageable pageable);
 }

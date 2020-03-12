@@ -1,4 +1,6 @@
-package com.fexample.fhub.dao.model.classes;
+package com.fexample.fhub.dao.model.classes.User;
+
+import com.fexample.fhub.dao.model.classes.BaseEntity;
 
 import java.util.List;
 

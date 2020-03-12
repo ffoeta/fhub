@@ -1,6 +1,6 @@
 package com.fexample.fhub.dao.service;
 
-import com.fexample.fhub.dao.model.classes.Role;
+import com.fexample.fhub.dao.model.classes.User.Role;
 import com.fexample.fhub.dao.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.fexample.fhub.dao.model.enums.Status;
-import com.fexample.fhub.dao.model.classes.User;
+import com.fexample.fhub.dao.model.classes.User.User;
 import com.fexample.fhub.dao.repository.UserRepository;
 import com.fexample.fhub.facade.interfaces.service.UserService;
 

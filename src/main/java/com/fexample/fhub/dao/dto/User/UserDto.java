@@ -1,8 +1,8 @@
 package com.fexample.fhub.dao.dto.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fexample.fhub.dao.model.classes.Role;
-import com.fexample.fhub.dao.model.classes.User;
+import com.fexample.fhub.dao.model.classes.User.Role;
+import com.fexample.fhub.dao.model.classes.User.User;
 
 import com.fexample.fhub.dao.model.enums.Status;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;

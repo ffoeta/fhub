@@ -1,5 +1,8 @@
-package com.fexample.fhub.dao.model.classes;
+package com.fexample.fhub.dao.model.classes.Store;
 
+
+import com.fexample.fhub.dao.model.classes.BaseEntity;
+import com.fexample.fhub.dao.model.classes.Static.Image;
 
 import java.util.List;
 
@@ -7,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "c_store_details_table")
-public class StoreDetails extends BaseEntity{
+public class StoreDetails extends BaseEntity {
 
     @Column(name = "name")
     private String name;

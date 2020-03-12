@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-import com.fexample.fhub.dao.model.classes.User;
+import com.fexample.fhub.dao.model.classes.User.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {

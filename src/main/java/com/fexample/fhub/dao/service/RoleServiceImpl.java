@@ -1,6 +1,6 @@
 package com.fexample.fhub.dao.service;
 
-import com.fexample.fhub.dao.model.classes.Role;
+import com.fexample.fhub.dao.model.classes.User.Role;
 import com.fexample.fhub.dao.repository.RoleRepository;
 import com.fexample.fhub.facade.interfaces.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

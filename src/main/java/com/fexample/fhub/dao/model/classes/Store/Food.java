@@ -1,10 +1,12 @@
-package com.fexample.fhub.dao.model.classes;
+package com.fexample.fhub.dao.model.classes.Store;
+
+import com.fexample.fhub.dao.model.classes.BaseEntity;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "с_category_table")
-public class Category extends BaseEntity {
+@Table(name = "c_food_table")
+public class Food extends BaseEntity {
     @Column(name = "name")
     private String name;
 
