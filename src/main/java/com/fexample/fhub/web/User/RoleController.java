@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.fexample.fhub.dao.dto.User.RoleDto;
 import com.fexample.fhub.dao.model.classes.User.Role;
-import com.fexample.fhub.facade.interfaces.service.RoleService;
+import com.fexample.fhub.facade.interfaces.service.User.RoleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.fexample.fhub.dao.model.classes.Static.Image;
-import com.fexample.fhub.facade.interfaces.service.ImageService;
+import com.fexample.fhub.facade.interfaces.service.Static.ImageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

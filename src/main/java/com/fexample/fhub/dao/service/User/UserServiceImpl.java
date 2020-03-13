@@ -1,7 +1,7 @@
-package com.fexample.fhub.dao.service;
+package com.fexample.fhub.dao.service.User;
 
 import com.fexample.fhub.dao.model.classes.User.Role;
-import com.fexample.fhub.dao.repository.RoleRepository;
+import com.fexample.fhub.dao.repository.User.RoleRepository;
 import com.fexample.fhub.facade.exception.Controller.ControllerServiceCallException;
 import com.fexample.fhub.facade.exception.Service.EntityAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import com.fexample.fhub.dao.model.enums.Status;
 import com.fexample.fhub.dao.model.classes.User.User;
-import com.fexample.fhub.dao.repository.UserRepository;
-import com.fexample.fhub.facade.interfaces.service.UserService;
+import com.fexample.fhub.dao.repository.User.UserRepository;
+import com.fexample.fhub.facade.interfaces.service.User.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -72,29 +69,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User fakeDeleteUserByUsername(String username) {
+    public User fakeDeleteUserById(UUID id) {
 
-        User user = this.userRepository.findByUsername(username);
+        Optional<User> user = this.userRepository.findById(id);
 
-        if (user == null)
-            throw new ControllerServiceCallException(
-                    new EntityAlreadyExistsException("User " + username + " does not exist."));
+        user.orElseThrow(() ->
+            new ControllerServiceCallException(
+                    new EntityAlreadyExistsException("User " + id + " does not exist.")));
         
-        user.setStatus(Status.DELETED);
+        user.get().setStatus(Status.DELETED);
         
-        return this.userRepository.save(user);
+        return this.userRepository.save(user.get());
     }
 
     @Override
-    public void deleteUserByUsername(String username) {
+    public void deleteUserById(UUID id) {
 
-        User user = this.userRepository.findByUsername(username);
+        Optional<User> user = this.userRepository.findById(id);
 
-        if (user == null)
-            throw new ControllerServiceCallException(
-                    new EntityAlreadyExistsException("User " + username + " does not exist."));
+        user.orElseThrow(() ->
+                new ControllerServiceCallException(
+                        new EntityAlreadyExistsException("User " + id + " does not exist.")));
 
-        this.userRepository.delete(user);
+        this.userRepository.delete(user.get());
     }
 
     @Override

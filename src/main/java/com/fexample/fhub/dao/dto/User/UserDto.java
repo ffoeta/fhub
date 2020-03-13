@@ -6,12 +6,20 @@ import com.fexample.fhub.dao.model.classes.User.User;
 
 import com.fexample.fhub.dao.model.enums.Status;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
+import com.fexample.fhub.facade.interfaces.dto.DtoRequestEntity;
+import com.fexample.fhub.facade.interfaces.dto.DtoResponseEntity;
+import com.fexample.fhub.facade.interfaces.service.User.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDto implements DtoEntity<User>{
+public class UserDto implements DtoResponseEntity<User>, DtoRequestEntity<User> {
+
+    @Autowired
+    RoleService roleService;
 
     private UUID id;
     private String username;
@@ -19,7 +27,7 @@ public class UserDto implements DtoEntity<User>{
     private Status status;
     private String firstname;
     private String lastname;
-    private List<Role> roles;
+    private List<String> roles;
     
     public User toModel() {
         User user = new User();
@@ -29,6 +37,13 @@ public class UserDto implements DtoEntity<User>{
         user.setStatus(status);
         user.setFirstname(firstname);
         user.setLastname(lastname);
+
+        List<Role> roles = new ArrayList<>();
+
+        this.getRoles().forEach((roleString) -> {
+            roles.add(this.roleService.findByName(roleString));
+        });
+
         user.setRoles(roles);
 
         return user;
@@ -42,7 +57,13 @@ public class UserDto implements DtoEntity<User>{
         this.setStatus(user.getStatus());
         this.setFirstname(user.getFirstname());
         this.setLastname(user.getLastname());
-        this.setRoles(user.getRoles());
+
+        List<String> rolesString = new ArrayList<>();
+        user.getRoles().forEach((role) -> {
+            rolesString.add(role.getName());
+        });
+
+        this.setRoles(rolesString);
 
         return this;
     }
@@ -95,11 +116,11 @@ public class UserDto implements DtoEntity<User>{
         this.lastname = lastname;
     }
 
-    public List<Role> getRoles() {
+    public List<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<String> roles) {
         this.roles = roles;
     }
 }

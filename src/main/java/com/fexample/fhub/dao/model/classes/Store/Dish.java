@@ -1,7 +1,7 @@
 package com.fexample.fhub.dao.model.classes.Store;
 
 import com.fexample.fhub.dao.model.classes.BaseEntity;
-import com.fexample.fhub.dao.model.classes.Static.Image;
+import com.fexample.fhub.dao.model.classes.Static.Link;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,73 +13,98 @@ public class Dish extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "r_dish_image_table", joinColumns = {@JoinColumn(name = "dish_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "link_id", referencedColumnName = "id")})
+    private Link image;
+
     @Column(name = "kkal")
     private int kkal;
 
     @Column(name = "price")
     private int price;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "r_dish_category_table", joinColumns = {@JoinColumn(name = "dish_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
-    List<Category> categories;
+    private List<Category> categories;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "r_dish_image_table", joinColumns = {@JoinColumn(name = "dish_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "image_id", referencedColumnName = "id")})
-    List<Image> images;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "r_dish_details_table", joinColumns = {@JoinColumn(name = "dish_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "details_id", referencedColumnName = "id")})
-    DishDetails dishDetails;
+    @JoinTable(name = "r_dish_galery_table", joinColumns = {@JoinColumn(name = "dish_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "link_id", referencedColumnName = "id")})
+    private List<Link> galery;
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
+    public Link getImage() {
+
+        return image;
+    }
+
+    public void setImage(Link image) {
+
+        this.image = image;
+    }
+
     public int getKkal() {
+
         return kkal;
     }
 
     public void setKkal(int kkal) {
+
         this.kkal = kkal;
     }
 
     public int getPrice() {
-        return this.price;
+
+        return price;
     }
 
     public void setPrice(int price) {
+
         this.price = price;
     }
 
     public List<Category> getCategories() {
+
         return categories;
     }
 
     public void setCategories(List<Category> categories) {
+
         this.categories = categories;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public List<Link> getGalery() {
+
+        return galery;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setGalery(List<Link> galery) {
+
+        this.galery = galery;
     }
 
-    public DishDetails getDishDetails() {
-        return dishDetails;
+    public String getDescription() {
+
+        return description;
     }
 
-    public void setDishDetails(DishDetails dishDetails) {
-        this.dishDetails = dishDetails;
+    public void setDescription(String description) {
+
+        this.description = description;
     }
 }

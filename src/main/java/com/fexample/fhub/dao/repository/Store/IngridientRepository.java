@@ -1,4 +1,4 @@
-package com.fexample.fhub.dao.repository;
+package com.fexample.fhub.dao.repository.Store;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

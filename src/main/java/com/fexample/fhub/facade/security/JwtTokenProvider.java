@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.fexample.fhub.dao.model.classes.User.Role;
 import com.fexample.fhub.dao.model.classes.User.User;
-import com.fexample.fhub.facade.interfaces.service.UserService;
+import com.fexample.fhub.facade.interfaces.service.User.UserService;
 
 import java.util.*;
 

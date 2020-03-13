@@ -1,4 +1,4 @@
-package com.fexample.fhub.dao.repository;
+package com.fexample.fhub.dao.repository.Static;
 
 import com.fexample.fhub.dao.model.classes.Static.Image;
 import org.springframework.data.jpa.repository.JpaRepository;

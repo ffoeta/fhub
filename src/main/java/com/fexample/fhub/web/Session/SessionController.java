@@ -7,7 +7,7 @@ import com.fexample.fhub.dao.dto.Session.LogInDto;
 import com.fexample.fhub.dao.dto.Session.SignUpDto;
 import com.fexample.fhub.dao.model.classes.User.User;
 import com.fexample.fhub.facade.exception.Controller.ControllerServiceCallException;
-import com.fexample.fhub.facade.interfaces.service.UserService;
+import com.fexample.fhub.facade.interfaces.service.User.UserService;
 import com.fexample.fhub.facade.security.JwtTokenProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,9 @@ package com.fexample.fhub.dao.dto.Session;
 
 import com.fexample.fhub.dao.model.classes.User.User;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
+import com.fexample.fhub.facade.interfaces.dto.DtoRequestEntity;
 
-public class LogInDto implements DtoEntity<User> {
+public class LogInDto implements DtoRequestEntity<User> {
 
     private String username;
     private String password;
@@ -26,15 +27,6 @@ public class LogInDto implements DtoEntity<User> {
     public void setPassword(String password) {
 
         this.password = password;
-    }
-
-    @Override
-    public LogInDto fromModel(User user) {
-
-        this.setUsername(user.getUsername());
-        this.setPassword(user.getPassword());
-
-        return this;
     }
 
     @Override

@@ -5,9 +5,10 @@ import com.fexample.fhub.dao.model.classes.User.User;
 
 import com.fexample.fhub.dao.model.enums.Status;
 import com.fexample.fhub.facade.interfaces.dto.DtoEntity;
+import com.fexample.fhub.facade.interfaces.dto.DtoRequestEntity;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SignUpDto implements DtoEntity<User>{
+public class SignUpDto implements DtoRequestEntity<User>{
 
     private String username;
     private String password;
@@ -27,18 +28,6 @@ public class SignUpDto implements DtoEntity<User>{
         user.setLastname(lastname);
 
         return user;
-    }
-
-    public SignUpDto fromModel(User user) {
-
-        this.setUsername(user.getUsername());
-        this.setPassword(user.getPassword());
-        this.setEmail(user.getEmail());
-        this.setStatus(user.getStatus());
-        this.setFirstname(user.getFirstname());
-        this.setLastname(user.getLastname());
-
-        return this;
     }
 
     public String getUsername() {

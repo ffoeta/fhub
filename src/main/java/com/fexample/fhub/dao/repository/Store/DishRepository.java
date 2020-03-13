@@ -1,4 +1,4 @@
-package com.fexample.fhub.dao.repository;
+package com.fexample.fhub.dao.repository.Store;
 
 import com.fexample.fhub.dao.model.classes.Store.Dish;
 import org.springframework.data.domain.Page;
